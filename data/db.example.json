@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "users": [
+    {
+      "id": "a",
+      "name": "小蓝",
+      "color": "#5b7cfa"
+    },
+    {
+      "id": "b",
+      "name": "小粉",
+      "color": "#f7617e"
+    }
+  ],
+  "rules": {
+    "startScore": 100,
+    "wakeDeduct": 1,
+    "dayCutoffHour": 4,
+    "enabledFrom": "2026-09-12",
+    "taskDeducts": {
+      "政治": 1,
+      "英语": 1,
+      "专业课": 2
+    },
+    "screenLimitMinutes": 180,
+    "screenRate": 1,
+    "leaveFreePerWeek": 2,
+    "leaveMaxHours": 3,
+    "leaveHourRate": 1,
+    "penaltyText": "输的人请对方喝奶茶，本周打工人当牛马也要快乐！"
+  },
+  "days": {
+    "2026-09-12": {
+      "a": {
+        "wake": "late",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [],
+        "_t": 0
+      },
+      "b": {
+        "wake": "late",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": false
+        },
+        "leaves": [],
+        "_t": 0
+      }
+    },
+    "2026-09-13": {
+      "a": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [],
+        "_t": 0
+      }
+    },
+    "2026-09-14": {
+      "a": {
+        "wake": "ok",
+        "screenOver": true,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [],
+        "_t": 0
+      },
+      "b": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [
+          {
+            "id": "l1789619222404_1",
+            "type": "normal",
+            "overtime": false,
+            "overHours": 0,
+            "reason": "外出办事",
+            "ts": 1789619222404
+          }
+        ],
+        "_t": 1
+      }
+    },
+    "2026-09-15": {
+      "a": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": false
+        },
+        "leaves": [],
+        "_t": 0
+      },
+      "b": {
+        "wake": "late",
+        "screenOver": true,
+        "subjects": {
+          "政治": true,
+          "英语": false,
+          "专业课": false
+        },
+        "leaves": [],
+        "_t": 0
+      }
+    },
+    "2026-09-16": {
+      "a": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [],
+        "_t": 0
+      },
+      "b": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true,
+          "英语": true,
+          "专业课": true
+        },
+        "leaves": [],
+        "_t": 0
+      }
+    },
+    "2026-09-17": {
+      "a": {
+        "wake": "ok",
+        "screenOver": false,
+        "subjects": {
+          "政治": true
+        },
+        "leaves": [],
+        "_t": 0
+      },
+      "b": {
+        "wake": "ok",
+        "screenOver": null,
+        "subjects": {
+          "政治": true
+        },
+        "leaves": [],
+        "_t": 0
+      }
+    }
+  }
+}

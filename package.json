@@ -1,0 +1,22 @@
+{
+  "name": "couple-checkin",
+  "version": "1.0.0",
+  "description": "零依赖的双人互督计分器 —— 每天打卡，每周六结一次账，输的人请客。",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "checkin",
+    "habit-tracker",
+    "self-discipline",
+    "scoreboard",
+    "zero-dependency",
+    "nodejs",
+    "couple"
+  ],
+  "license": "MIT"
+}

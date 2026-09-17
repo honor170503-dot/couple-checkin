@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>我们俩的互督计分器</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- 顶部：本周比分 -->
+  <header class="topbar">
+    <div class="logo">♥ 互督计分器</div>
+    <div class="weekinfo">
+      <span id="weekRange"></span>
+      <span class="dot"></span>
+      <span id="weekCountdown"></span>
+    </div>
+  </header>
+
+  <!-- 身份选择（首次进入 / 手动切换） -->
+  <div id="identityBar" class="identity-bar">
+    <div class="identity-title" id="identity-title">今天我是…</div>
+    <div class="identity-btns" id="identityBtns"></div>
+  </div>
+
+  <!-- 比分卡 -->
+  <section id="scoreboard" class="scoreboard">
+    <div id="scoreCards" class="score-cards"></div>
+    <div id="winnerBanner" class="winner-banner hidden"></div>
+  </section>
+
+  <!-- 每日操作 -->
+  <section class="daily">
+    <div class="seg" id="segTabs"></div>
+    <div class="daynav" id="dayNav"></div>
+
+    <!-- 面板A -->
+    <div id="panelA" class="panel hidden"></div>
+    <!-- 面板B -->
+    <div id="panelB" class="panel hidden"></div>
+  </section>
+
+  <!-- 历史战绩 -->
+  <section class="history">
+    <h2>📜 历史战绩</h2>
+    <div id="historyList"></div>
+  </section>
+
+  <!-- 设置 -->
+  <footer class="footer">
+    <button id="btnSettings" class="btn-ghost">⚙ 规则与设置</button>
+    <button id="btnExport" class="btn-ghost">⬇ 备份数据</button>
+    <button id="btnImport" class="btn-ghost">⬆ 恢复备份</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+  </footer>
+</div>
+
+<!-- 设置弹层 -->
+<div id="settingsModal" class="modal-mask hidden">
+  <div class="modal">
+    <h3>⚙ 规则与设置</h3>
+    <div class="modal-body">
+      <div class="set-group">
+        <div class="set-title">双方昵称（互相对账时显示的名字）</div>
+        <div class="row2">
+          <label><span style="color:#5b7cfa">●</span> 蓝方昵称<span class="req">*</span><input id="nameA" maxlength="8" placeholder="如：宝贝"></label>
+          <label><span style="color:#f7617e">●</span> 粉方昵称<span class="req">*</span><input id="nameB" maxlength="8" placeholder="如：亲爱的"></label>
+        </div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">基础分</div>
+        <label>每周起始分 <input type="number" id="rStartScore" min="0" step="1"></label>
+      </div>
+      <div class="set-group">
+        <div class="set-title">每日结算时间</div>
+        <label>每天
+          <select id="rCutoff">
+            <option value="0">当晚 24:00（零点）</option>
+            <option value="4">次日凌晨 4:00</option>
+          </select>
+          切换新的一天
+        </label>
+        <div class="hint-inline">选「次日凌晨 4:00」时，凌晨 3 点打的卡仍算作前一天，4 点后才结算前一天的漏打；选「当晚 24:00」则一过零点就算新的一天。</div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">起床</div>
+        <label>晚起一次扣 <input type="number" id="rWake" min="0" step="1"> 分</label>
+      </div>
+      <div class="set-group">
+        <div class="set-title">每日三科打卡（政治 / 英语 / 专业课）</div>
+        <label>政治 未完成扣 <input type="number" id="rTaskPol" min="0" step="0.5"> 分</label>
+        <label>英语 未完成扣 <input type="number" id="rTaskEng" min="0" step="0.5"> 分</label>
+        <label>专业课 未完成扣 <input type="number" id="rTaskMaj" min="0" step="0.5"> 分</label>
+        <div class="hint-inline">每科只有「完成 / 未完成」两个选项，自己打卡，对方可查；漏打按未完成扣分。</div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">娱乐软件（屏幕）</div>
+        <label>超过 <input type="number" id="rScreenLimit" min="1" step="1"> 分钟算「超时」</label>
+        <label>超时固定扣 <input type="number" id="rScreenRate" min="0" step="0.5"> 分</label>
+        <div class="hint-inline">日常只需二选一：今天有没有超时。选「超时」固定扣上面的分数，与超了多久无关。</div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">请假规则</div>
+        <label>每周免费额度 <input type="number" id="rLeaveFree" min="0" step="1"> 次</label>
+        <label>超时后，每超 1 小时扣 <input type="number" id="rLeaveHourRate" min="0" step="0.5"> 分</label>
+        <div class="hint-inline">请假二选一：<b>没超时</b> → 只消耗一次额度；<b>超时</b> → 填写超了几小时，按每超 1 小时自动算扣分。超过免费额度后，即使没超时也固定扣 1 分。突发情况豁免。</div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">缺勤起算日</div>
+        <label>从 <input type="date" id="rEnabledFrom"> 起算缺勤</label>
+        <div class="hint-inline">早于这一天的日子一律不判缺勤（避免翻旧账）。留空则不改动当前值。</div>
+      </div>
+      <div class="set-group">
+        <div class="set-title">结算惩罚文案</div>
+        <textarea id="rPenalty" rows="2" placeholder="例如：输的人请对方喝奶茶"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button id="btnSaveRules" class="btn-primary">保存</button>
+      <button id="btnCloseModal" class="btn-ghost">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- 轻提示 -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
