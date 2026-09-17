@@ -1,0 +1,17 @@
+.git/
+.gitignore
+.gitattributes
+
+# 账本与运行期产物一律不进镜像（镜像里从空账本开始）
+data/
+
+# 文档与截图不需要进镜像
+docs/
+README.md
+LICENSE
+
+# 本地环境
+node_modules/
+*.log
+.vscode/
+.idea/
